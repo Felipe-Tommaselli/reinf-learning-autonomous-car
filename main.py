@@ -3,15 +3,15 @@ import numpy as np
 import math
 import random
 
-import gym
-import gym_game
+import gymnasium as gym
+import gym_env
 
 def simulate():
     global epsilon, epsilon_decay
     for episode in range(MAX_EPISODES):
 
         # Init environment
-        state = env.reset()
+        state = env.reset(seed=episode)
         total_reward = 0
 
         # AI tries up to MAX_TRY times
@@ -24,7 +24,7 @@ def simulate():
                 action = np.argmax(q_table[state])
 
             # Do action and get result
-            next_state, reward, done, _ = env.step(action)
+            next_state, reward, done, truncated, _ = env.step(action)
             total_reward += reward
 
             # Get correspond q value from state, action pair
