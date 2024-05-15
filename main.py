@@ -19,10 +19,8 @@ def simulate():
 
             # In the beginning, do random action to learn
             if random.uniform(0, 1) < epsilon:
-                print(f'random action: {random.uniform(0, 1)}')
                 action = env.action_space.sample()
             else:
-                print(f'learned action: {random.uniform(0, 1)}')
                 action = np.argmax(q_table[state])
 
             # Do action and get result
@@ -56,9 +54,9 @@ if __name__ == "__main__":
     env = gym.make("Pygame-v0")
     MAX_EPISODES = 9999
     MAX_TRY = 1000
-    epsilon = 0.7
-    epsilon_decay = 0.999
-    learning_rate = 0.1
+    epsilon = 0.5
+    epsilon_decay = 0.9 # 0.999
+    learning_rate = 0.2
     gamma = 0.6
     num_box = tuple((env.observation_space.high + np.ones(env.observation_space.shape)).astype(int))
     q_table = np.zeros(num_box + (env.action_space.n,))
