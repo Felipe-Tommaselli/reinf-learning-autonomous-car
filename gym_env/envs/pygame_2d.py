@@ -25,10 +25,10 @@ class Car:
         self.check_flag = False
         self.distance = 0
         self.time_spent = 0
-        for d in range(-90, 120, 45):
+        for d in range(-45, 46, 45):
             self.check_radar(d)
 
-        for d in range(-90, 120, 45):
+        for d in range(-45, 46, 45):
             self.check_radar_for_draw(d)
 
     def draw(self, screen):
@@ -135,7 +135,7 @@ class PyGame2D:
         self.screen = pygame.display.set_mode((screen_width, screen_height))
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont("Arial", 30)
-        self.car = Car('car.png', 'map.png', [700, 650])
+        self.car = Car('assets/terrasentia.png', 'map.png', [700, 650])
         self.game_speed = 60
         self.mode = 0
 
@@ -152,7 +152,7 @@ class PyGame2D:
         self.car.check_checkpoint()
 
         self.car.radars.clear()
-        for d in range(-90, 120, 45):
+        for d in range(-45, 46, 45):
             self.car.check_radar(d)
 
     def evaluate(self):
@@ -180,7 +180,7 @@ class PyGame2D:
     def observe(self):
         # return state
         radars = self.car.radars
-        ret = [0, 0, 0, 0, 0]
+        ret = [0, 0, 0]
         for i, r in enumerate(radars):
             ret[i] = int(r[1] / 30)
 
@@ -203,7 +203,7 @@ class PyGame2D:
             self.screen.fill((0, 0, 0))
 
         self.car.radars_for_draw.clear()
-        for d in range(-90, 120, 45):
+        for d in range(-45, 46, 45):
             self.car.check_radar_for_draw(d)
 
         pygame.draw.circle(self.screen, (255, 255, 0), check_point[self.car.current_check], 70, 1)
