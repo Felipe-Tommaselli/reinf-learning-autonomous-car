@@ -14,15 +14,22 @@ def simulate():
         state = env.reset(seed=episode)[0]
         total_reward = 0
 
+        # count random actions
+        crandom = 0
+        clearned = 0 
+
         # AI tries up to MAX_TRY times
         for t in range(MAX_TRY):
             
-            #TODO: Count random actions through time
             # In the beginning, do random action to learn
             if random.uniform(0, 1) < epsilon:
+                crandom += 1
                 action = env.action_space.sample()
             else:
+                clearned += 1
                 action = np.argmax(q_table[state])
+
+            print(f'random: {crandom}| learned: {clearned} // total: {crandom + clearned}', end='\r')
 
             # Do action and get result
             next_state, reward, done, truncated, _ = env.step(action)
@@ -57,8 +64,8 @@ if __name__ == "__main__":
     env = gym.make("Pygame-v0")
     MAX_EPISODES = 9999
     MAX_TRY = 1000
-    epsilon = 0.5
-    epsilon_decay = 0.9 # 0.999
+    epsilon = 0.6
+    epsilon_decay = 0.99 # 0.999
     learning_rate = 0.2
     gamma = 0.6
     num_box = tuple((env.observation_space.high + np.ones(env.observation_space.shape)).astype(int))

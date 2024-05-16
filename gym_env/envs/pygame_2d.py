@@ -1,20 +1,22 @@
 import pygame
 import math
 
-screen_width = 1500
-screen_height = 800
+screen_width = 960 # 1500 
+screen_height = 540 # 800
+w_ini = screen_height//2 + 150
+h_ini = screen_width//2 - 35
 check_point = ((1200, 660), (1250, 120), (190, 200), (1030, 270), (250, 475), (650, 690))
 
 class Car:
     def __init__(self, car_file, map_file, pos):
         self.surface = pygame.image.load(car_file)
         self.map = pygame.image.load(map_file)
-        self.surface = pygame.transform.scale(self.surface, (100, 100))
+        self.surface = pygame.transform.scale(self.surface, (60, 60))
         self.rotate_surface = self.surface
         self.pos = pos
         self.angle = 0
         self.speed = 0
-        self.center = [self.pos[0] + 50, self.pos[1] + 50]
+        self.center = [self.pos[0] + 30, self.pos[1] + 30]
         self.radars = []
         self.radars_for_draw = []
         self.is_alive = True
@@ -30,6 +32,7 @@ class Car:
 
         for d in range(-45, 46, 45):
             self.check_radar_for_draw(d)
+
 
     def draw(self, screen):
         screen.blit(self.rotate_surface, self.pos)
@@ -121,8 +124,8 @@ class Car:
             self.pos[1] = screen_height - 120
 
         # caculate 4 collision points
-        self.center = [int(self.pos[0]) + 50, int(self.pos[1]) + 50]
-        len = 40
+        self.center = [int(self.pos[0]) + 30, int(self.pos[1]) + 30]
+        len = 20
         left_top = [self.center[0] + math.cos(math.radians(360 - (self.angle + 30))) * len, self.center[1] + math.sin(math.radians(360 - (self.angle + 30))) * len]
         right_top = [self.center[0] + math.cos(math.radians(360 - (self.angle + 150))) * len, self.center[1] + math.sin(math.radians(360 - (self.angle + 150))) * len]
         left_bottom = [self.center[0] + math.cos(math.radians(360 - (self.angle + 210))) * len, self.center[1] + math.sin(math.radians(360 - (self.angle + 210))) * len]
@@ -134,8 +137,8 @@ class PyGame2D:
         pygame.init()
         self.screen = pygame.display.set_mode((screen_width, screen_height))
         self.clock = pygame.time.Clock()
-        self.font = pygame.font.SysFont("Arial", 30)
-        self.car = Car('assets/terrasentia.png', 'map.png', [700, 650])
+        self.font = pygame.font.SysFont("Arial", 15)
+        self.car = Car('assets/terrasentia.png', 'assets/map2_small.png', [w_ini, h_ini])
         self.game_speed = 60
         self.mode = 0
 
@@ -212,9 +215,9 @@ class PyGame2D:
         self.car.draw(self.screen)
 
 
-        text = self.font.render("Press 'm' to change view mode", True, (255, 255, 0))
+        text = self.font.render("Press 'm' to change view mode", True, (255, 0, 0))
         text_rect = text.get_rect()
-        text_rect.center = (screen_width/2, 100)
+        text_rect.center = (screen_width/2, 150)
         self.screen.blit(text, text_rect)
 
 
