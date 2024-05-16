@@ -138,7 +138,8 @@ class PyGame2D:
         self.screen = pygame.display.set_mode((screen_width, screen_height))
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont("Arial", 15)
-        self.car = Car('assets/terrasentia.png', 'assets/map2_small.png', [w_ini, h_ini])
+        self.car = Car('assets/terrasentia.png', 'map_grey.png', [w_ini, h_ini])
+        # self.car = Car('assets/terrasentia.png', 'assets/map2_small.png', [w_ini, h_ini])
         self.game_speed = 60
         self.mode = 0
 
@@ -167,10 +168,10 @@ class PyGame2D:
             self.car.time_spent = 0
         """
         if not self.car.is_alive:
-            reward = -10000 + self.car.distance
+            reward = -1000 + 2*self.car.distance
 
         elif self.car.goal:
-            reward = 10000
+            reward = 1000
         return reward
 
     def is_done(self):
