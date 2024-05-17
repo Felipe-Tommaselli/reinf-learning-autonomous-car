@@ -168,7 +168,7 @@ class PyGame2D:
             self.car.time_spent = 0
         """
         if not self.car.is_alive:
-            reward = -1000 + 2*self.car.distance
+            reward = -2000 + self.car.distance
 
         elif self.car.goal:
             reward = 1000
