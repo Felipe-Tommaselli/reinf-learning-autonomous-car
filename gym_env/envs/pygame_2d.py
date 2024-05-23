@@ -84,25 +84,9 @@ class Car:
         dist = int(math.sqrt(math.pow(x - self.center[0], 2) + math.pow(y - self.center[1], 2)))
         self.radars_for_draw.append([(x, y), dist])
 
-    def check_checkpoint(self):
-        p = check_point[self.current_check]
-        self.prev_distance = self.cur_distance
-        dist = get_distance(p, self.center)
-        if dist < 70:
-            self.current_check += 1
-            self.prev_distance = 9999
-            self.check_flag = True
-            if self.current_check >= len(check_point):
-                self.current_check = 0
-                self.goal = True
-            else:
-                self.goal = False
-
-        self.cur_distance = dist
-
     def update(self):
         #check speed
-        self.speed -= 0.5
+        self.speed -= 1.0
         if self.speed > 10:
             self.speed = 10
         if self.speed < 1:
@@ -115,7 +99,6 @@ class Car:
             self.pos[0] = 20
         elif self.pos[0] > screen_width - 120:
             self.pos[0] = screen_width - 120
-
         self.distance += self.speed
         self.time_spent += 1
         self.pos[1] += math.sin(math.radians(360 - self.angle)) * self.speed
@@ -154,7 +137,6 @@ class PyGame2D:
 
         self.car.update()
         self.car.check_collision()
-        self.car.check_checkpoint()
 
         self.car.radars.clear()
         for d in range(-45, 46, 45):
@@ -162,20 +144,13 @@ class PyGame2D:
 
     def evaluate(self):
         reward = 0
-        """
-        if self.car.check_flag:
-            self.car.check_flag = False
-            reward = 2000 - self.car.time_spent
-            self.car.time_spent = 0
-        """
-        w1 = 5 
-        w2 = 0.5
-
-        #TODO: Change this
-        if not self.car.is_alive:
-            reward = -10 + w1*self.car.distance
-        elif self.car.goal:
-            reward = 100
+        w1 = 0.7 # negatie 
+        w2 = 0.1 # positive
+        if not self.car.is_alive: 
+            reward = -10 - w1*self.car.speed
+        else: 
+            reward = +0.5 + w2*self.car.speed
+        #print(f'reward: {reward:.2f}, speed: {self.car.speed}, distance: {self.car.distance}')
         return reward
 
     def is_done(self):
@@ -191,7 +166,6 @@ class PyGame2D:
         ret = [0, 0, 0]
         for i, r in enumerate(radars):
             ret[i] = int(r[1] / 30)
-
         return tuple(ret)
 
     def view(self):
@@ -206,7 +180,6 @@ class PyGame2D:
 
         self.screen.blit(self.car.map, (0, 0))
 
-
         if self.mode == 1:
             self.screen.fill((0, 0, 0))
 
@@ -219,18 +192,14 @@ class PyGame2D:
         self.car.draw_radar(self.screen)
         self.car.draw(self.screen)
 
-
-        text = self.font.render("Press 'm' to change view mode", True, (255, 0, 0))
-        text_rect = text.get_rect()
-        text_rect.center = (screen_width/2, 150)
-        self.screen.blit(text, text_rect)
+        # text = self.font.render("Press 'm' to change view mode", True, (255, 0, 0))
+        # text_rect = text.get_rect()
+        # text_rect.center = (screen_width/2, 150)
+        # self.screen.blit(text, text_rect)
 
         pygame.display.flip()
         self.clock.tick(self.game_speed)
 
-
-def get_distance(p1, p2):
-	return math.sqrt(math.pow((p1[0] - p2[0]), 2) + math.pow((p1[1] - p2[1]), 2))
 
 def rot_center(image, angle):
     orig_rect = image.get_rect()

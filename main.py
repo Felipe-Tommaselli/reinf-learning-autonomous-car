@@ -40,7 +40,7 @@ def simulate(csv_file_path):
                     clearned += 1
                     action = np.argmax(q_table[state])
 
-                print(f'random: {crandom}| learned: {clearned} // total: {crandom + clearned}', end='\r')
+                #print(f'random: {crandom}| learned: {clearned} // total: {crandom + clearned}', end='\r')
 
                 # Do action and get result
                 next_state, reward, done, truncated, _ = env.step(action)
