@@ -5,6 +5,7 @@ screen_width = 960 # 1500
 screen_height = 540 # 800
 w_ini = screen_height//2 + 150
 h_ini = screen_width//2 - 35
+#TODO: ADD CHECKPOINTS
 check_point = ((1200, 660), (1250, 120), (190, 200), (1030, 270), (250, 475), (650, 690))
 
 class Car:
@@ -138,7 +139,7 @@ class PyGame2D:
         self.screen = pygame.display.set_mode((screen_width, screen_height))
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont("Arial", 15)
-        self.car = Car('assets/terrasentia.png', 'map_grey.png', [w_ini, h_ini])
+        self.car = Car('assets/terrasentia.png', 'assets/map_grey_small.png', [w_ini, h_ini])
         # self.car = Car('assets/terrasentia.png', 'assets/map2_small.png', [w_ini, h_ini])
         self.game_speed = 60
         self.mode = 0
@@ -167,11 +168,14 @@ class PyGame2D:
             reward = 2000 - self.car.time_spent
             self.car.time_spent = 0
         """
-        if not self.car.is_alive:
-            reward = -2000 + self.car.distance
+        w1 = 5 
+        w2 = 0.5
 
+        #TODO: Change this
+        if not self.car.is_alive:
+            reward = -10 + w1*self.car.distance
         elif self.car.goal:
-            reward = 1000
+            reward = 100
         return reward
 
     def is_done(self):
@@ -220,8 +224,6 @@ class PyGame2D:
         text_rect = text.get_rect()
         text_rect.center = (screen_width/2, 150)
         self.screen.blit(text, text_rect)
-
-
 
         pygame.display.flip()
         self.clock.tick(self.game_speed)
