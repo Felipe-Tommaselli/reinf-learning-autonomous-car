@@ -129,14 +129,10 @@ class PyGame2D:
 
     def action(self, action):
         if action == 0: 
-            self.car.speed += 3
+            self.car.speed += 2
         elif action == 1:
-            self.car.speed -= 1
-        elif action == 2:
-            self.car.speed += 1
             self.car.angle += 5
-        elif action == 3:
-            self.car.speed += 1
+        elif action == 2:
             self.car.angle -= 5
 
         self.car.update()

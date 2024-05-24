@@ -44,7 +44,7 @@ def simulate(csv_file_path):
                 actions_list.append(action)
 
                 # if actions list full of same actions, change last action randomly
-                actions_list[-1] = random.randint(0, 3) if actions_list.count(actions_list[-1]) >= 3 else actions_list[-1]
+                actions_list[-1] = random.randint(0, 2) if actions_list.count(actions_list[-1]) >= 3 else actions_list[-1]
                 action = actions_list[-1]
 
                 # Do action and get result
