@@ -69,7 +69,7 @@ def simulate(csv_file_path):
                 # When episode is done, print reward
                 if done or t >= MAX_TRY - 1:
                     writer.writerow([episode, t, reward, total_reward])
-                    print(f"Ep: {episode} ... Time Steps: {t} ... Total reward = {total_reward:.2f}")
+                    print(f"Ep: {episode} ... Time Steps: {t} ... Total reward = {total_reward:.2f} ... Randomness: {crandom/(crandom + clearned):.2f}")
                     break
 
         # exploring rate decay

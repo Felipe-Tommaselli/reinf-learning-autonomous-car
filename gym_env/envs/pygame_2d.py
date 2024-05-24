@@ -129,7 +129,7 @@ class PyGame2D:
 
     def action(self, action):
         if action == 0:
-            self.car.speed += 2
+            self.car.speed += 1.5
         if action == 1:
             self.car.angle += 5
         elif action == 2:
