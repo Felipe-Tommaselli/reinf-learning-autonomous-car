@@ -132,7 +132,8 @@ class PyGame2D:
             self.car.speed += 1.5
         if action == 1:
             self.car.angle += 5
-        elif action == 2:
+        elif action == 3:
+            self.car.speed += 1
             self.car.angle -= 5
 
         self.car.update()
@@ -144,12 +145,12 @@ class PyGame2D:
 
     def evaluate(self):
         reward = 0
-        w1 = 0.7 # negatie 
+        w1 = 1 # negatie 
         w2 = 0.1 # positive
         if not self.car.is_alive: 
-            reward = -10 - w1*self.car.speed
+            reward = -5 #- w1*self.car.speed
         else: 
-            reward = +0.5 + w2*self.car.speed
+            reward = +0.5 #+ w2*self.car.speed
         #print(f'reward: {reward:.2f}, speed: {self.car.speed}, distance: {self.car.distance}')
         return reward
 
