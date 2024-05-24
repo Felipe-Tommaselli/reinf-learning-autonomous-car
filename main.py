@@ -99,7 +99,7 @@ if __name__ == "__main__":
     MAX_EPISODES = 9999
     MAX_TRY = 1000
     epsilon = 0.6
-    epsilon_decay = 0.99 # 0.999
+    epsilon_decay = 0.999 # 0.999
     learning_rate = 0.2
     gamma = 0.6
     num_box = tuple((env.observation_space.high + np.ones(env.observation_space.shape)).astype(int))
