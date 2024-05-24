@@ -86,7 +86,7 @@ class Car:
 
     def update(self):
         #check speed
-        self.speed -= 0.75
+        self.speed -= 1.0
         if self.speed > 10:
             self.speed = 10
         if self.speed < 1:
@@ -128,11 +128,15 @@ class PyGame2D:
         self.mode = 0
 
     def action(self, action):
-        if action == 0:
-            self.car.speed += 2
-        if action == 1:
-            self.car.angle += 5
+        if action == 0: 
+            self.car.speed += 3
+        elif action == 1:
+            self.car.speed -= 1
         elif action == 2:
+            self.car.speed += 1
+            self.car.angle += 5
+        elif action == 3:
+            self.car.speed += 1
             self.car.angle -= 5
 
         self.car.update()
@@ -144,12 +148,12 @@ class PyGame2D:
 
     def evaluate(self):
         reward = 0
-        w1 = 0.75 # negatie 
-        w2 = 0.075 # positive
+        w1 = 1 # negatie 
+        w2 = 0.1 # positive
         if not self.car.is_alive: 
-            reward = -10 - w1*self.car.speed
+            reward = -5 #- w1*self.car.speed
         else: 
-            reward = +0.5 + w2*self.car.speed
+            reward = +0.5 #+ w2*self.car.speed
         #print(f'reward: {reward:.2f}, speed: {self.car.speed}, distance: {self.car.distance}')
         return reward
 

@@ -26,7 +26,7 @@ def simulate(csv_file_path):
         totalreward_list = list()
         reward_list = list()
         eps_list = list()
-
+        actions_list = [0, 0, 0, 0]
         with open(csv_file_path, mode='a', newline='') as file:
             writer = csv.writer(file)
             # AI tries up to MAX_TRY times
@@ -40,7 +40,12 @@ def simulate(csv_file_path):
                     clearned += 1
                     action = np.argmax(q_table[state])
 
-                #print(f'random: {crandom}| learned: {clearned} // total: {crandom + clearned}', end='\r')
+                actions_list.pop(0)
+                actions_list.append(action)
+
+                # if actions list full of same actions, change last action randomly
+                actions_list[-1] = random.randint(0, 3) if actions_list.count(actions_list[-1]) >= 3 else actions_list[-1]
+                action = actions_list[-1]
 
                 # Do action and get result
                 next_state, reward, done, truncated, _ = env.step(action)
@@ -69,7 +74,7 @@ def simulate(csv_file_path):
                 # When episode is done, print reward
                 if done or t >= MAX_TRY - 1:
                     writer.writerow([episode, t, reward, total_reward])
-                    print(f"Ep: {episode} ... Time Steps: {t} ... Total reward = {total_reward:.2f}")
+                    print(f"Ep: {episode} ... Time Steps: {t} ... Total reward = {total_reward:.2f} ... randomness: {crandom/(crandom + clearned):.2f}")
                     break
 
         # exploring rate decay
@@ -100,7 +105,7 @@ if __name__ == "__main__":
     MAX_TRY = 1000
     epsilon = 0.6
     epsilon_decay = 0.999 # 0.999
-    learning_rate = 0.2
+    learning_rate = 0.3
     gamma = 0.6
     num_box = tuple((env.observation_space.high + np.ones(env.observation_space.shape)).astype(int))
     #TODO: Debug this
