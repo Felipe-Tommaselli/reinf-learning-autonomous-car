@@ -102,6 +102,8 @@ class Car:
         elif self.pos[1] > screen_height - 120:
             self.pos[1] = screen_height - 120
 
+        #TODO: update the angle -> theta += w 
+
         # caculate 4 collision points
         self.center = [int(self.pos[0]) + 30, int(self.pos[1]) + 30]
         len = 20
