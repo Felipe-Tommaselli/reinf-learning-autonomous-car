@@ -2,10 +2,7 @@ import sys
 import numpy as np
 import math
 import random
-
-
 import csv
-
 
 import gymnasium as gym
 import gym_env
@@ -50,7 +47,6 @@ def simulate(env, q_table, csv_file_path, MAX_EPISODES=9999, MAX_TRY=1000, learn
 
                 # Do action and get result
                 next_state, reward, done, truncated, _ = env.step(action)
-                #TODO: Fix this (negative reward)
                 total_reward += reward
 
                 # Get correspond q value from state, action pair
