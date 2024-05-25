@@ -24,12 +24,12 @@ def simulate(env, q_table, csv_file_path, MAX_EPISODES=9999, MAX_TRY=1000, learn
         totalreward_list = list()
         reward_list = list()
         eps_list = list()
-        actions_list = [0, 0, 0, 0]
         with open(csv_file_path, mode='a', newline='') as file:
             writer = csv.writer(file)
             # AI tries up to MAX_TRY times
             for t in range(MAX_TRY):
                 
+                #TODO CHANGE Q LEARNING TO CONTINOUS
                 # In the beginning, do random action to learn
                 if random.uniform(0, 1) < epsilon:
                     crandom += 1
@@ -37,13 +37,6 @@ def simulate(env, q_table, csv_file_path, MAX_EPISODES=9999, MAX_TRY=1000, learn
                 else:
                     clearned += 1
                     action = np.argmax(q_table[state])
-
-                actions_list.pop(0)
-                actions_list.append(action)
-
-                # if actions list full of same actions, change last action randomly
-                actions_list[-1] = random.randint(0, 2) if actions_list.count(actions_list[-1]) >= 3 else actions_list[-1]
-                action = actions_list[-1]
 
                 # Do action and get result
                 next_state, reward, done, truncated, _ = env.step(action)
@@ -53,7 +46,6 @@ def simulate(env, q_table, csv_file_path, MAX_EPISODES=9999, MAX_TRY=1000, learn
                 q_value = q_table[state][action]
                 best_q = np.max(q_table[next_state])
 
-                #TODO: Debug this
                 # Q(state, action) <- (1 - a)Q(state, action) + a(reward + rmaxQ(next state, all actions))
                 q_table[state][action] = (1 - learning_rate) * q_value + learning_rate * (reward + gamma * best_q)
 

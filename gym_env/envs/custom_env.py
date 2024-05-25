@@ -7,8 +7,15 @@ class CustomEnv(gym.Env):
     #metadata = {'render.modes' : ['human']}
     def __init__(self):
         self.pygame = PyGame2D()
-        self.action_space = spaces.Discrete(3)
-        self.observation_space = spaces.Box(np.array([0, 0, 0]), np.array([10, 10, 10]), dtype=int)
+        # self.action_space = spaces.Discrete(3)
+        # action = [speed, angle]
+        self.action_space            = spaces.Box(low=np.array([0, -45]),
+                                            high=np.array([10, 45]),
+                                            dtype=np.float32)
+        self.observation_space = spaces.Box(low=np.array([0, 0, 0]), 
+                                            high=np.array([10, 10, 10]), 
+                                            dtype=int)
+
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
@@ -18,6 +25,7 @@ class CustomEnv(gym.Env):
         info = {}
         return obs, info
 
+    #TODO: calculate each step time 
     def step(self, action):
         self.pygame.action(action)
         obs = self.pygame.observe()

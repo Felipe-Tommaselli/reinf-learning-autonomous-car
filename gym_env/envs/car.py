@@ -5,9 +5,6 @@ screen_width = 960 # 1500
 screen_height = 540 # 800
 w_ini = screen_height//2 + 150
 h_ini = screen_width//2 - 35
-#TODO: ADD CHECKPOINTS
-check_point = ((1200, 660), (1250, 120), (190, 200), (1030, 270), (250, 475), (650, 690))
-
 
 class Car:
     def __init__(self, car_file, map_file, pos):
@@ -22,11 +19,6 @@ class Car:
         self.radars = []
         self.radars_for_draw = []
         self.is_alive = True
-        self.current_check = 0
-        self.prev_distance = 0
-        self.cur_distance = 0
-        self.goal = False
-        self.check_flag = False
         self.distance = 0
         self.time_spent = 0
         for d in range(-45, 46, 45):
@@ -86,7 +78,9 @@ class Car:
         self.radars_for_draw.append([(x, y), dist])
 
     def update(self):
-        #check speed
+        #TODO: Change this to use the action space values
+        #check angles boundries too 
+        # tune limits
         self.speed -= 1.0
         if self.speed > 10:
             self.speed = 10

@@ -7,8 +7,6 @@ screen_width = 960 # 1500
 screen_height = 540 # 800
 w_ini = screen_height//2 + 150
 h_ini = screen_width//2 - 35
-#TODO: ADD CHECKPOINTS
-check_point = ((1200, 660), (1250, 120), (190, 200), (1030, 270), (250, 475), (650, 690))
 
 
 class PyGame2D:
@@ -22,6 +20,9 @@ class PyGame2D:
         self.game_speed = 60
         self.mode = 0
 
+    #TODO: Change those actions
+    # speed = v |(action 0)
+    # angle = w |(action 1)
     def action(self, action):
         if action == 0: 
             self.car.speed += 2
@@ -49,7 +50,7 @@ class PyGame2D:
         return reward
 
     def is_done(self):
-        if not self.car.is_alive or self.car.goal:
+        if not self.car.is_alive:
             self.car.current_check = 0
             self.car.distance = 0
             return True
