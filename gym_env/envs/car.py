@@ -1,10 +1,9 @@
 import pygame
 import math
 
-screen_width = 960 # 1500 
-screen_height = 540 # 800
-w_ini = screen_height//2 + 150
-h_ini = screen_width//2 - 35
+# 870 X 746
+screen_width = 870 # 1500 
+screen_height = 746 # 800
 
 class Car:
     def __init__(self, car_file, map_file, pos):
@@ -13,10 +12,10 @@ class Car:
         self.surface = pygame.transform.scale(self.surface, (60, 60))
         self.rotate_surface = self.surface
         self.pos = pos
-        self.angle = 0
+        self.angle = 90
         self.w = 0
         self.speed = 0
-        self.center = [self.pos[0] + 30, self.pos[1] + 30]
+        self.center = [self.pos[0], self.pos[1]-70]
         self.radars = []
         self.radars_for_draw = []
         self.is_alive = True

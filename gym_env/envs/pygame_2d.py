@@ -4,10 +4,11 @@ import numpy as np
 
 from gym_env.envs.car import Car
 
-screen_width = 960 # 1500 
-screen_height = 540 # 800
-w_ini = screen_height//2 + 150
-h_ini = screen_width//2 - 35
+# 870 X 746
+screen_width = 870 # 1500 
+screen_height = 746 # 800
+w_ini = screen_width//2 - 320
+h_ini = screen_height//2 + 300
 
 
 class PyGame2D:
@@ -16,17 +17,19 @@ class PyGame2D:
         self.screen = pygame.display.set_mode((screen_width, screen_height))
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont("Arial", 15)
-        self.car = Car('assets/terrasentia.png', 'assets/map_grey_small.png', [w_ini, h_ini])
+        self.car = Car('assets/terrasentia.png', 'assets/map_new4_small.png', [w_ini, h_ini])
         # self.car = Car('assets/terrasentia.png', 'assets/map2_small.png', [w_ini, h_ini])
         self.game_speed = 60
         self.mode = 0
+
+        pygame.draw.circle(self.screen, (255, 0, 0), (0, 0), 100)
 
     #TODO: Change those actions
     # speed = v |(action 0)
     # angle = w |(action 1)
     def action(self, action):
-        action0 = np.select([action[0] == 1, action[0] == 2], [1, 9], default=5)
-        action1 = np.select([action[1] == 1, action[1] == 2], [-5, 5], default=0)
+        action0 = np.select([action[0] == 0, action[0] == 2], [1, 9], default=5)
+        action1 = np.select([action[1] == 0, action[1] == 2], [-5, 5], default=0)
 
         self.car.speed = action0
         self.car.w     = action1
