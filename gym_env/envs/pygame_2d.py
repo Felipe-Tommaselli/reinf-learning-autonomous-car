@@ -24,12 +24,8 @@ class PyGame2D:
     # speed = v |(action 0)
     # angle = w |(action 1)
     def action(self, action):
-        if action == 0: 
-            self.car.speed += 2
-        elif action == 1:
-            self.car.angle += 5
-        elif action == 2:
-            self.car.angle -= 5
+        self.car.speed = action[0]
+        self.car.w     = action[1]
 
         self.car.update()
         self.car.check_collision()
@@ -83,15 +79,10 @@ class PyGame2D:
         for d in range(-45, 46, 45):
             self.car.check_radar_for_draw(d)
 
-        pygame.draw.circle(self.screen, (255, 255, 0), check_point[self.car.current_check], 70, 1)
+        #pygame.draw.circle(self.screen, (255, 255, 0), check_point[self.car.current_check], 70, 1)
         self.car.draw_collision(self.screen)
         self.car.draw_radar(self.screen)
         self.car.draw(self.screen)
-
-        # text = self.font.render("Press 'm' to change view mode", True, (255, 0, 0))
-        # text_rect = text.get_rect()
-        # text_rect.center = (screen_width/2, 150)
-        # self.screen.blit(text, text_rect)
 
         pygame.display.flip()
         self.clock.tick(self.game_speed)

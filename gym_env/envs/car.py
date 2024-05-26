@@ -14,6 +14,7 @@ class Car:
         self.rotate_surface = self.surface
         self.pos = pos
         self.angle = 0
+        self.w = 0
         self.speed = 0
         self.center = [self.pos[0] + 30, self.pos[1] + 30]
         self.radars = []
@@ -80,29 +81,24 @@ class Car:
     def update(self):
         #TODO: Change this to use the action space values
         #check angles boundries too 
-        # tune limits
-        self.speed -= 1.0
-        if self.speed > 10:
-            self.speed = 10
-        if self.speed < 1:
-            self.speed = 1
+        limits = [[0, 10], [-45, 45]]
+        self.speed = min(max(self.speed, limits[0][0]), limits[0][1])
+        self.angle = min(max(self.angle, limits[1][0]), limits[1][1])
 
-        #check position
+        # Check position
         self.rotate_surface = rot_center(self.surface, self.angle)
+
+        # Update position
         self.pos[0] += math.cos(math.radians(360 - self.angle)) * self.speed
-        if self.pos[0] < 20:
-            self.pos[0] = 20
-        elif self.pos[0] > screen_width - 120:
-            self.pos[0] = screen_width - 120
+        self.pos[1] += math.sin(math.radians(360 - self.angle)) * self.speed
+
+        # Constrain position within screen boundaries
+        self.pos[0] = min(max(self.pos[0], 20), screen_width - 120)
+        self.pos[1] = min(max(self.pos[1], 20), screen_height - 120)
+
+        # Update distance and time spent
         self.distance += self.speed
         self.time_spent += 1
-        self.pos[1] += math.sin(math.radians(360 - self.angle)) * self.speed
-        if self.pos[1] < 20:
-            self.pos[1] = 20
-        elif self.pos[1] > screen_height - 120:
-            self.pos[1] = screen_height - 120
-
-        #TODO: update the angle -> theta += w 
 
         # caculate 4 collision points
         self.center = [int(self.pos[0]) + 30, int(self.pos[1]) + 30]
@@ -112,6 +108,10 @@ class Car:
         left_bottom = [self.center[0] + math.cos(math.radians(360 - (self.angle + 210))) * len, self.center[1] + math.sin(math.radians(360 - (self.angle + 210))) * len]
         right_bottom = [self.center[0] + math.cos(math.radians(360 - (self.angle + 330))) * len, self.center[1] + math.sin(math.radians(360 - (self.angle + 330))) * len]
         self.four_points = [left_top, right_top, left_bottom, right_bottom]
+
+        #TODO: Update angle 
+        # update state of art -> after correction 
+        self.angle += self.w
 
 def rot_center(image, angle):
     orig_rect = image.get_rect()

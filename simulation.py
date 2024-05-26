@@ -18,12 +18,11 @@ def simulate(env, q_table, csv_file_path, MAX_EPISODES=9999, MAX_TRY=1000, learn
 
         # count random actions
         crandom  = 0
-        clearned = 0 
+        clearned = 0
 
-        # save infos for analysis
-        totalreward_list = list()
-        reward_list = list()
-        eps_list = list()
+        q_table0 = q_table[0]
+        q_table1 = q_table[1]
+
         with open(csv_file_path, mode='a', newline='') as file:
             writer = csv.writer(file)
             # AI tries up to MAX_TRY times
@@ -33,32 +32,40 @@ def simulate(env, q_table, csv_file_path, MAX_EPISODES=9999, MAX_TRY=1000, learn
                 # In the beginning, do random action to learn
                 if random.uniform(0, 1) < epsilon:
                     crandom += 1
-                    action = env.action_space.sample()
+                    action0 = env.action_space.sample()[0] 
+                    action1 = env.action_space.sample()[1] 
                 else:
                     clearned += 1
-                    action = np.argmax(q_table[state])
+                    action0 = np.argmax(q_table0[state])
+                    action1 = np.argmax(q_table1[state])
+
+                # Define the actions DISCRETE
+                action0 = np.select([action0 < 3, action0 >= 6], [1, 9], default=5)
+                action1 = np.select([action1 < -15, action1 > 15], [-30, 30], default=0)
+
+                print(f'action0: {action0}, action1: {action1}')
 
                 # Do action and get result
-                next_state, reward, done, truncated, _ = env.step(action)
+                next_state, reward, done, truncated, _ = env.step([action0, action1])
                 total_reward += reward
 
                 # Get correspond q value from state, action pair
-                q_value = q_table[state][action]
-                best_q = np.max(q_table[next_state])
+                print(f'state: {state},\naction0: {action0},\naction1: {action1},\nnext_state: {next_state},\nqtable0: {q_table0[state]}')
+                q_value0 = q_table0[state][action0]
+                best_q0 = np.max(q_table0[next_state])
+
+                q_value1 = q_table1[state][action1]
+                best_q1 = np.max(q_table1[next_state])
 
                 # Q(state, action) <- (1 - a)Q(state, action) + a(reward + rmaxQ(next state, all actions))
-                q_table[state][action] = (1 - learning_rate) * q_value + learning_rate * (reward + gamma * best_q)
+                q_table0[state][action0] = (1 - learning_rate) * q_value0 + learning_rate * (reward + gamma * best_q0)
+                q_table1[state][action1] = (1 - learning_rate) * q_value1 + learning_rate * (reward + gamma * best_q1)
 
                 # Set up for the next iteration
                 state = next_state
 
                 # Draw games
                 env.render()
-
-                # save infos
-                totalreward_list.append(total_reward)
-                reward_list.append(reward)
-                eps_list.append(t)
 
                 # When episode is done, print reward
                 if done or t >= MAX_TRY - 1:
