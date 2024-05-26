@@ -83,7 +83,7 @@ class Car:
         #check angles boundries too 
         limits = [[0, 10], [-45, 45]]
         self.speed = min(max(self.speed, limits[0][0]), limits[0][1])
-        self.angle = min(max(self.angle, limits[1][0]), limits[1][1])
+        #self.angle = min(max(self.angle, limits[1][0]), limits[1][1])
 
         # Check position
         self.rotate_surface = rot_center(self.surface, self.angle)

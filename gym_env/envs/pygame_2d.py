@@ -1,5 +1,6 @@
 import pygame
 import math
+import numpy as np
 
 from gym_env.envs.car import Car
 
@@ -24,8 +25,11 @@ class PyGame2D:
     # speed = v |(action 0)
     # angle = w |(action 1)
     def action(self, action):
-        self.car.speed = action[0]
-        self.car.w     = action[1]
+        action0 = np.select([action[0] == 1, action[0] == 2], [1, 9], default=5)
+        action1 = np.select([action[1] == 1, action[1] == 2], [-5, 5], default=0)
+
+        self.car.speed = action0
+        self.car.w     = action1
 
         self.car.update()
         self.car.check_collision()

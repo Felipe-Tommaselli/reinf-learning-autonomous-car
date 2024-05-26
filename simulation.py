@@ -34,23 +34,18 @@ def simulate(env, q_table, csv_file_path, MAX_EPISODES=9999, MAX_TRY=1000, learn
                     crandom += 1
                     action0 = env.action_space.sample()[0] 
                     action1 = env.action_space.sample()[1] 
+                    action0 = np.select([action0 < 3, action0 >= 6], [0, 2], default=1)
+                    action1 = np.select([action1 < -15, action1 > 15], [0, 2], default=1)
                 else:
                     clearned += 1
                     action0 = np.argmax(q_table0[state])
                     action1 = np.argmax(q_table1[state])
-
-                # Define the actions DISCRETE
-                action0 = np.select([action0 < 3, action0 >= 6], [1, 9], default=5)
-                action1 = np.select([action1 < -15, action1 > 15], [-30, 30], default=0)
-
-                print(f'action0: {action0}, action1: {action1}')
 
                 # Do action and get result
                 next_state, reward, done, truncated, _ = env.step([action0, action1])
                 total_reward += reward
 
                 # Get correspond q value from state, action pair
-                print(f'state: {state},\naction0: {action0},\naction1: {action1},\nnext_state: {next_state},\nqtable0: {q_table0[state]}')
                 q_value0 = q_table0[state][action0]
                 best_q0 = np.max(q_table0[next_state])
 
