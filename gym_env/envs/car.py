@@ -107,7 +107,6 @@ class Car:
         left_bottom = [self.center[0] + math.cos(math.radians(360 - (self.angle + 210))) * len, self.center[1] + math.sin(math.radians(360 - (self.angle + 210))) * len]
         right_bottom = [self.center[0] + math.cos(math.radians(360 - (self.angle + 330))) * len, self.center[1] + math.sin(math.radians(360 - (self.angle + 330))) * len]
         self.four_points = [left_top, right_top, left_bottom, right_bottom]
-
         #TODO: Update angle 
         # update state of art -> after correction 
         self.angle += self.w
