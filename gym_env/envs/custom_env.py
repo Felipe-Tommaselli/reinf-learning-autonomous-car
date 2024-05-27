@@ -25,7 +25,6 @@ class CustomEnv(gym.Env):
         info = {}
         return obs, info
 
-    #TODO: calculate each step time 
     def step(self, action):
         self.pygame.action(action)
         obs = self.pygame.observe()

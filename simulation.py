@@ -26,8 +26,6 @@ def simulate(env, q_table, csv_file_path, MAX_EPISODES=9999, MAX_TRY=1000, learn
             writer = csv.writer(file)
             # AI tries up to MAX_TRY times
             for t in range(MAX_TRY):
-                
-                #TODO CHANGE Q LEARNING TO CONTINOUS
                 # In the beginning, do random action to learn
                 if random.uniform(0, 1) < epsilon:
                     crandom += 1

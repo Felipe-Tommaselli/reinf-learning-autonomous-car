@@ -79,7 +79,6 @@ class Car:
         self.radars_for_draw.append([(x, y), dist])
 
     def update(self):
-        #TODO: Change this to use the action space values
         #check angles boundries too 
         limits = [[0, 10], [-45, 45]]
         self.speed = min(max(self.speed, limits[0][0]), limits[0][1])
@@ -109,7 +108,6 @@ class Car:
         left_bottom  = [self.center[0] + math.cos(math.radians(360 - (self.angle + 210))) * lenx, self.center[1] + math.sin(math.radians(360 - (self.angle + 210))) * leny]
         right_bottom = [self.center[0] + math.cos(math.radians(360 - (self.angle + 330))) * lenx, self.center[1] + math.sin(math.radians(360 - (self.angle + 330))) * leny]
         self.four_points = [left_top, right_top, left_bottom, right_bottom]
-        #TODO: Update angle 
         # update state of art -> after correction 
         self.angle += self.w
 

@@ -24,7 +24,6 @@ def main():
     learning_rate = config['learning_rate']
     gamma         = config['gamma']
 
-    #TODO: Debug this
     num_box = tuple((env.observation_space.high + np.ones(env.observation_space.shape)).astype(int))
     q_table0 = np.zeros(num_box + (3,)) #! change this
     q_table1 = np.zeros(num_box + (3,))
