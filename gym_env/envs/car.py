@@ -15,7 +15,7 @@ class Car:
         self.angle = 90
         self.w = 0
         self.speed = 0
-        self.center = [self.pos[0], self.pos[1]-70]
+        self.center = [self.pos[0], self.pos[1]]
         self.radars = []
         self.radars_for_draw = []
         self.is_alive = True
@@ -30,6 +30,7 @@ class Car:
 
     def draw(self, screen):
         screen.blit(self.rotate_surface, self.pos)
+        #* debug draws here
 
     def draw_collision(self, screen):
         for i in range(4):
@@ -101,11 +102,12 @@ class Car:
 
         # caculate 4 collision points
         self.center = [int(self.pos[0]) + 30, int(self.pos[1]) + 30]
-        len = 20
-        left_top = [self.center[0] + math.cos(math.radians(360 - (self.angle + 30))) * len, self.center[1] + math.sin(math.radians(360 - (self.angle + 30))) * len]
-        right_top = [self.center[0] + math.cos(math.radians(360 - (self.angle + 150))) * len, self.center[1] + math.sin(math.radians(360 - (self.angle + 150))) * len]
-        left_bottom = [self.center[0] + math.cos(math.radians(360 - (self.angle + 210))) * len, self.center[1] + math.sin(math.radians(360 - (self.angle + 210))) * len]
-        right_bottom = [self.center[0] + math.cos(math.radians(360 - (self.angle + 330))) * len, self.center[1] + math.sin(math.radians(360 - (self.angle + 330))) * len]
+        lenx = 27
+        leny = 26
+        left_top     = [self.center[0] + math.cos(math.radians(360 - (self.angle +  30))) * lenx, self.center[1] + math.sin(math.radians(360 - (self.angle +  30))) * leny]
+        right_top    = [self.center[0] + math.cos(math.radians(360 - (self.angle + 150))) * lenx, self.center[1] + math.sin(math.radians(360 - (self.angle + 150))) * leny]
+        left_bottom  = [self.center[0] + math.cos(math.radians(360 - (self.angle + 210))) * lenx, self.center[1] + math.sin(math.radians(360 - (self.angle + 210))) * leny]
+        right_bottom = [self.center[0] + math.cos(math.radians(360 - (self.angle + 330))) * lenx, self.center[1] + math.sin(math.radians(360 - (self.angle + 330))) * leny]
         self.four_points = [left_top, right_top, left_bottom, right_bottom]
         #TODO: Update angle 
         # update state of art -> after correction 
