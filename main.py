@@ -24,10 +24,8 @@ def main():
     learning_rate = config['learning_rate']
     gamma         = config['gamma']
 
-    num_box = tuple((env.observation_space.high + np.ones(env.observation_space.shape)).astype(int))
-    q_table0 = np.zeros(num_box + (3,)) #! change this
-    q_table1 = np.zeros(num_box + (3,))
-    simulate(env, [q_table0, q_table1], csv_file_path, MAX_EPISODES, MAX_TRY, learning_rate, gamma, epsilon, epsilon_decay)
+
+    simulate(env, csv_file_path, MAX_EPISODES, MAX_TRY, learning_rate, gamma, epsilon, epsilon_decay)
 
 
 # Function to create a directory and CSV file for storing data
