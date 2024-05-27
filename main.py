@@ -16,7 +16,7 @@ def main():
     csv_file_path = create_run_directory_and_file(datetime.now().strftime('%m%d_%H%M'))
     config = get_configs('configs/config.yaml')
 
-    env = gym.make("Pygame-v0")
+    env = gym.make("autonomous-car-v0")
     MAX_EPISODES  = config['MAX_EPISODES']
     MAX_TRY       = config['MAX_TRY']
     epsilon       = config['epsilon']
@@ -24,9 +24,8 @@ def main():
     learning_rate = config['learning_rate']
     gamma         = config['gamma']
 
-    #TODO: Debug this
-    num_box = tuple((env.observation_space.high + np.ones(env.observation_space.shape)).astype(int))
-    q_table0 = np.zeros(num_box + (3,)) #! change this
+    #num_box = tuple((env.observation_space.high + np.ones(env.observation_space.shape)).astype(int))
+    q_table0 = np.zeros(num_box + (3,)) 
     q_table1 = np.zeros(num_box + (3,))
     simulate(env, [q_table0, q_table1], csv_file_path, MAX_EPISODES, MAX_TRY, learning_rate, gamma, epsilon, epsilon_decay)
 
