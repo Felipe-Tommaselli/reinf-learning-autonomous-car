@@ -8,7 +8,7 @@ from gym_env.envs.car import Car
 screen_width = 870 # 1500 
 screen_height = 746 # 800
 w_ini = screen_width//2 - 320
-h_ini = screen_height//2 + 300
+h_ini = screen_height//2 -200 #+ 300
 
 
 class PyGame2D:
