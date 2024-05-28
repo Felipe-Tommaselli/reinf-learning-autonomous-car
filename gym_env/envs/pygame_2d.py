@@ -24,9 +24,6 @@ class PyGame2D:
 
         pygame.draw.circle(self.screen, (255, 0, 0), (0, 0), 100)
 
-    #TODO: Change those actions
-    # speed = v |(action 0)
-    # angle = w |(action 1)
     def action(self, action):
         action0 = np.select([action[0] == 0, action[0] == 2], [1, 9], default=5)
         action1 = np.select([action[1] == 0, action[1] == 2], [-5, 5], default=0)

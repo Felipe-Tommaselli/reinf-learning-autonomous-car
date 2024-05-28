@@ -13,7 +13,7 @@ import yaml
 from simulation import simulate
 
 def main():
-    csv_file_path = create_run_directory_and_file(datetime.now().strftime('%m%d_%H%M'))
+    run_id = create_run_directory_and_file(datetime.now().strftime('%m%d_%H%M'))
     config = get_configs('configs/config.yaml')
 
     env = gym.make("autonomous-car-v0")
@@ -24,11 +24,7 @@ def main():
     learning_rate = config['learning_rate']
     gamma         = config['gamma']
 
-    #num_box = tuple((env.observation_space.high + np.ones(env.observation_space.shape)).astype(int))
-    q_table0 = np.zeros(num_box + (3,)) 
-    q_table1 = np.zeros(num_box + (3,))
-    simulate(env, [q_table0, q_table1], csv_file_path, MAX_EPISODES, MAX_TRY, learning_rate, gamma, epsilon, epsilon_decay)
-
+    simulate(env, run_id, MAX_EPISODES, MAX_TRY, learning_rate, gamma, epsilon, epsilon_decay)
 
 # Function to create a directory and CSV file for storing data
 def create_run_directory_and_file(run_id):
@@ -43,7 +39,7 @@ def create_run_directory_and_file(run_id):
         # Write header row to the CSV file (customize headers as needed)
         writer.writerow(["Episode", "Time Steps", "Reward", "Total Reward"])
 
-    return csv_file_path
+    return run_id
 
 def get_configs(path_config):
     with open(path_config, 'r') as file:
