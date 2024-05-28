@@ -2,10 +2,15 @@ import gymnasium as gym
 import gym_env
 
 from stable_baselines3 import SAC
+from stable_baselines3.sac.policies import MlpPolicy
+from stable_baselines3.common.env_checker import check_env
 
 def simulate(env, run_id, MAX_EPISODES=10000):
     # Instantiate the agent
-    model = SAC(policy='MlpPolicy', env=env, verbose=1, 
+
+    # If the environment don't follow the interface, an error will be thrown
+    check_env(env, warn=True)
+    model = SAC(policy=MlpPolicy, env=env, verbose=1, 
                                             gamma=0.99, 
                                             learning_rate=0.0003, 
                                             buffer_size=50000, 

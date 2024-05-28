@@ -2,15 +2,20 @@ import gymnasium as gym
 from gymnasium import spaces
 import numpy as np
 from gym_env.envs.pygame_2d import PyGame2D
+import gymnasium
 
-class CustomEnv(gym.Env):
+class CustomEnv(gymnasium.Env):
     #metadata = {'render.modes' : ['human']}
-    def __init__(self):
+    def __init__(self, render_mode='human'):
+        super(CustomEnv, self).__init__()
         self.pygame = PyGame2D()
         #self.action_space = spaces.Discrete(3)
         # action = [speed, angle]
-        self.action_space            = spaces.Box(low=np.array([0, -45]),
-                                            high=np.array([10, 45]),
+        # self.action_space            = spaces.Box(low=np.array([0, -45]),
+        #                                     high=np.array([10, 45]),
+        #                                     dtype=np.float32)
+        self.action_space            = spaces.Box(low=np.array([-1, -1]),
+                                            high=np.array([1, 1]),
                                             dtype=np.float32)
         self.observation_space = spaces.Box(low=np.array([0, 0, 0]), 
                                             high=np.array([10, 10, 10]), 
@@ -22,8 +27,12 @@ class CustomEnv(gym.Env):
         del self.pygame
         self.pygame = PyGame2D()
         obs = self.pygame.observe()
-        info = {}
-        return obs, info
+        # Return only the observation unless return_info is True
+        if options and options.get('return_info', False):
+            return (obs,)
+        else:
+            info = {}
+            return (obs, info)
 
     #TODO: calculate each step time 
     def step(self, action):
@@ -35,3 +44,8 @@ class CustomEnv(gym.Env):
 
     def render(self, mode="human", close=False):
         self.pygame.view()
+
+    def close(self):
+        self.pygame.close()
+        super().close()
+        pass

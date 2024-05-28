@@ -4,11 +4,13 @@ import math
 import random
 import os
 from datetime import datetime
+import csv
+import yaml
 
 import gymnasium as gym
 import gym_env
-import csv
-import yaml
+from gym_env.envs.custom_env import CustomEnv
+from stable_baselines3.common.env_util import make_vec_env
 
 from simulation import simulate
 
@@ -16,7 +18,6 @@ def main():
     run_id = create_run_directory_and_file(datetime.now().strftime('%m%d_%H%M'))
     config = get_configs('configs/config.yaml')
 
-    env = gym.make("autonomous-car-v0")
     MAX_EPISODES  = config['MAX_EPISODES']
     MAX_TRY       = config['MAX_TRY']
     epsilon       = config['epsilon']
@@ -24,6 +25,8 @@ def main():
     learning_rate = config['learning_rate']
     gamma         = config['gamma']
 
+    #env = gym.make("autonomous-car-v0")
+    env = make_vec_env(CustomEnv, n_envs=1)
     simulate(env, run_id, MAX_EPISODES)
 
 # Function to create a directory and CSV file for storing data

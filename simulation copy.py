@@ -5,7 +5,7 @@ import random
 import csv
 
 import gymnasium as gym
-import gym_env
+
 
 
 def simulate(env, q_table, csv_file_path, MAX_EPISODES=9999, MAX_TRY=1000, learning_rate=0.3, gamma=0.6, epsilon=0.6, epsilon_decay=0.999):

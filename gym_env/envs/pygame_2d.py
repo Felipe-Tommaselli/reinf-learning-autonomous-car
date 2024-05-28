@@ -62,7 +62,7 @@ class PyGame2D:
         ret = [0, 0, 0]
         for i, r in enumerate(radars):
             ret[i] = int(r[1] / 30)
-        return tuple(ret)
+        return np.array(ret)
 
     def view(self):
         # draw game
