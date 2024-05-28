@@ -24,7 +24,7 @@ def main():
     learning_rate = config['learning_rate']
     gamma         = config['gamma']
 
-    simulate(env, run_id, MAX_EPISODES, MAX_TRY, learning_rate, gamma, epsilon, epsilon_decay)
+    simulate(env, run_id, MAX_EPISODES)
 
 # Function to create a directory and CSV file for storing data
 def create_run_directory_and_file(run_id):

@@ -1,9 +1,31 @@
 import gymnasium as gym
 import gym_env
 
-def simulate(env_id, run_id, MAX_EPISODES=10000):
+from stable_baselines3 import SAC
+
+def simulate(env, run_id, MAX_EPISODES=10000):
     # Instantiate the agent
-    model = SAC('MlpPolicy', env, verbose=1)
+    model = SAC(policy='MlpPolicy', env=env, verbose=1, 
+                                            gamma=0.99, 
+                                            learning_rate=0.0003, 
+                                            buffer_size=50000, 
+                                            learning_starts=100, 
+                                            train_freq=1, 
+                                            batch_size=64, 
+                                            tau=0.005, 
+                                            ent_coef='auto', 
+                                            target_update_interval=1, 
+                                            gradient_steps=1, 
+                                            target_entropy='auto', 
+                                            action_noise=None, 
+                                            #random_exploration=0.0, 
+                                            tensorboard_log=None, 
+                                            _init_setup_model=True, 
+                                            policy_kwargs=None, 
+                                            #full_tensorboard_log=False, 
+                                            seed=None, 
+                                            #n_cpu_tf_sess=None
+                                            )
 
     # Train the agent
     model.learn(total_timesteps=MAX_EPISODES * 1000)
