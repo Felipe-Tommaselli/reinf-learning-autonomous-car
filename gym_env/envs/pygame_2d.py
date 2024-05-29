@@ -17,7 +17,7 @@ class PyGame2D:
         self.screen = pygame.display.set_mode((screen_width, screen_height))
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont("Arial", 15)
-        self.car = Car('assets/terrasentia.png', 'assets/map_new4_small.png', [w_ini, h_ini])
+        self.car = Car('assets/terrasentia.png', 'assets/map_new7_small.png', [w_ini, h_ini])
         # self.car = Car('assets/terrasentia.png', 'assets/map2_small.png', [w_ini, h_ini])
         self.game_speed = 60
         self.mode = 0

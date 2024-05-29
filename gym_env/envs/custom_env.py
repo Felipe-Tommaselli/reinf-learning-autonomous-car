@@ -22,9 +22,13 @@ class CustomEnv(gym.Env):
         del self.pygame
         self.pygame = PyGame2D()
         obs = self.pygame.observe()
-        info = {}
-        return obs, info
-
+        # Return only the observation unless return_info is True
+        if options and options.get('return_info', False):
+            return (obs,)
+        else:
+            info = {}
+            return (obs, info)
+            
     def step(self, action):
         self.pygame.action(action)
         obs = self.pygame.observe()
