@@ -33,7 +33,7 @@ def simulate(env, run_id, MAX_EPISODES=10000):
                                             )
 
     # Train the agent
-    model.learn(total_timesteps=MAX_EPISODES * 1000)
+    model.learn(total_timesteps=MAX_EPISODES)
 
     # Simulate and record results
     with open(f'runs/run_{run_id}/{run_id}.csv', mode='a', newline='') as file:

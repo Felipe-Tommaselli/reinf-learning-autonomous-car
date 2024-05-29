@@ -25,8 +25,8 @@ def main():
     learning_rate = config['learning_rate']
     gamma         = config['gamma']
 
-    #env = gym.make("autonomous-car-v0")
-    env = make_vec_env(CustomEnv, n_envs=1)
+    env = gym.make("autonomous-car-v0")
+    #env = make_vec_env(CustomEnv, n_envs=1)
     simulate(env, run_id, MAX_EPISODES)
 
 # Function to create a directory and CSV file for storing data
